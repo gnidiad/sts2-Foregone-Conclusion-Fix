@@ -1,5 +1,7 @@
 # ForegoneConclusionFix
 
+**简体中文** | [English](README.en.md)
+
 Slay the Spire 2 修复 mod：持有「先行指引 / Guiding Star」的 `DrawCardsNextTurnPower` 时打出「既定事项 / Foregone Conclusion」，下回合额外抽牌被吞掉的问题。
 
 ## 根因

@@ -1,9 +1,9 @@
 # ForegoneConclusionFix
 
+**English** | [简体中文](README.md)
+
 A bug-fix mod for **Slay the Spire 2**: the extra cards granted by *Guiding Star*
 (`DrawCardsNextTurnPower`) are silently lost if you also played *Foregone Conclusion*.
-
-> 中文说明见 [README.md](README.md)
 
 ## The bug
 
