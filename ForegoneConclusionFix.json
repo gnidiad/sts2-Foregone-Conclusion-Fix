@@ -1,0 +1,12 @@
+{
+  "id": "ForegoneConclusionFix",
+  "name": "既定事项bug修复",
+  "author": "DaiDing",
+  "description": "修复了既定事项吞下回合抽牌堆的问题",
+  "version": "0.1.0",
+  "min_game_version": "0.111.0",
+  "has_pck": false,
+  "has_dll": true,
+  "dependencies": [],
+  "affects_gameplay": true
+}

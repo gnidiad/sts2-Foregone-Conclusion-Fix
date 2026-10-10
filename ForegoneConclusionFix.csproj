@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>ForegoneConclusionFix</AssemblyName>
+    <RootNamespace>ForegoneConclusionFix</RootNamespace>
+    <NoWarn>$(NoWarn);MSB3270</NoWarn>
+
+    <!-- 游戏安装路径；如有不同可用 /p:Sts2Dir=... 覆盖 -->
+    <Sts2Dir Condition="'$(Sts2Dir)' == ''">C:\Program Files (x86)\Steam\steamapps\common\Slay the Spire 2</Sts2Dir>
+    <Sts2DataDir>$(Sts2Dir)\data_sts2_windows_x86_64</Sts2DataDir>
+    <ModsPath>$(Sts2Dir)\mods</ModsPath>
+    <!-- 构建后自动部署到游戏 mods 目录；只想编译不部署时用 /p:DeployToMods=false -->
+    <DeployToMods Condition="'$(DeployToMods)' == ''">true</DeployToMods>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>$(Sts2DataDir)\0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="sts2">
+      <HintPath>$(Sts2DataDir)\sts2.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <!-- 构建后复制 <id>.dll 与 <id>.json 到游戏 mods 目录，二者必须同目录且 DLL 名 = manifest.id（ModManager 按此加载）。
+       仅 Release 构建触发，避免 VS 的 Debug 构建（默认配置）用旧产物覆盖游戏目录里的 DLL。 -->
+  <Target Name="DeployToModsFolder" AfterTargets="Build" Condition="'$(Configuration)' == 'Release' And '$(DeployToMods)' == 'true'">
+    <Message Text="Deploying mod to $(ModsPath)\$(AssemblyName)\" Importance="high" />
+    <MakeDir Directories="$(ModsPath)\$(AssemblyName)" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModsPath)\$(AssemblyName)" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\$(AssemblyName).json" DestinationFolder="$(ModsPath)\$(AssemblyName)" />
+  </Target>
+
+</Project>
